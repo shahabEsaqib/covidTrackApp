@@ -37,6 +37,7 @@ class _WorldStatesState extends State<WorldStates> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     StatesServices statesServices = new StatesServices();
     return Scaffold(
+      
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Covid Data"),

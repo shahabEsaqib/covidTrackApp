@@ -16,6 +16,7 @@ class _CountrieslistState extends State<Countrieslist> {
   Widget build(BuildContext context) {
     StatesServices statesServices = new StatesServices();
     return Scaffold(
+      
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,

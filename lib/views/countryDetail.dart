@@ -27,6 +27,7 @@ class _CountryDetailScreenState extends State<CountryDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.name),
