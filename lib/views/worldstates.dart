@@ -37,6 +37,7 @@ class _WorldStatesState extends State<WorldStates> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     StatesServices statesServices = new StatesServices();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Covid Data"),
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -46,94 +47,96 @@ class _WorldStatesState extends State<WorldStates> with TickerProviderStateMixin
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
-
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height*.01,),
-            FutureBuilder(
-              future:statesServices.fetchWorldStetes(),
-              builder: (context,AsyncSnapshot<WorldStatesModel> snapshot){
-              if(!snapshot.hasData){
-                return Expanded(
-                  flex: 1,
-                  child: SpinKitFadingCircle(
-                    controller: _animationController,
-                    color: Colors.black,
-                    duration: Duration(microseconds: 1500),
-                    size: 60,
-                
-                  ),
-                );
-              }else{
-                return Column(
-                  children: [
-                    PieChart(dataMap: {
-                      // "population": double.parse(snapshot.data!.population.toString()) ,
-                      "Totle Cases": double.parse(snapshot.data!.cases.toString()) ,
-                      // "todayCases": double.parse(snapshot.data!.todayCases.toString()) ,
-                      "Deaths": double.parse(snapshot.data!.deaths.toString()) ,
-                      // "todayDeaths": double.parse(snapshot.data!.todayDeaths.toString()) ,
-                      "Recovered": double.parse(snapshot.data!.recovered.toString()) ,
-                      // "todayRecovered": double.parse(snapshot.data!.todayRecovered.toString()) ,
-                      // "Critical": double.parse(snapshot.data!.critical.toString()) ,
-                      
-                      // "affectedCountries": double.parse(snapshot.data!.cases.toString()) ,
-            },
-            chartType: ChartType.ring,
-            animationDuration: Duration(milliseconds: 1000),
-            colorList: colorList,
-            chartRadius: MediaQuery.of(context).size.width /2.5,
-            centerText: "covid",
-            legendOptions: LegendOptions(
-              legendPosition: LegendPosition.right,
-              showLegendsInRow:false
-            ),
-            chartValuesOptions: ChartValuesOptions(showChartValuesInPercentage: true),
-            
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height*.06),
-              child: Card(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: ReusableRow(title: "Population", value: snapshot.data!.population.toString()),
+        child: Expanded(
+          
+          child: Column(
+              
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height*.01,),
+              FutureBuilder(
+                future:statesServices.fetchWorldStetes(),
+                builder: (context,AsyncSnapshot<WorldStatesModel> snapshot){
+                if(!snapshot.hasData){
+                  return Expanded(
+                    flex: 1,
+                    child: SpinKitFadingCircle(
+                      controller: _animationController,
+                      color: Colors.black,
+                      duration: Duration(microseconds: 1500),
+                      size: 60,
+                  
                     ),
-                    ReusableRow(title: "Totle Cases", value: snapshot.data!.cases.toString()),
-                    ReusableRow(title: "Today Cases", value: snapshot.data!.todayCases.toString()),
-                    ReusableRow(title: "Deaths", value: snapshot.data!.deaths.toString()),
-                    ReusableRow(title: "Today Deaths", value: snapshot.data!.todayDeaths.toString()),
-                    ReusableRow(title: "Recoverd", value: snapshot.data!.recovered.toString()),
-                    ReusableRow(title: "Today Recoverd", value: snapshot.data!.todayRecovered.toString()),
-                    ReusableRow(title: "Critical", value: snapshot.data!.critical.toString()),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Countrieslist()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 50,
-                  child: Center(child: Text('Track Countries')),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xff1aa260),
-                  ),
-                ),
-              ),
-            )
- 
-                  ],
-                );
-              }
-            }),
-
-          ],
+                  );
+                }else{
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        PieChart(dataMap: {
+                          
+                          "Totle Cases": double.parse(snapshot.data!.cases.toString()) ,
+                          
+                          "Deaths": double.parse(snapshot.data!.deaths.toString()) ,
+                          
+                          "Recovered": double.parse(snapshot.data!.recovered.toString()) ,
+                       
+                              },
+                              chartType: ChartType.ring,
+                              animationDuration: Duration(milliseconds: 1000),
+                              colorList: colorList,
+                              chartRadius: MediaQuery.of(context).size.width /3,
+                              centerText: "covid",
+                              legendOptions: LegendOptions(
+                                legendPosition: LegendPosition.right,
+                                showLegendsInRow:false
+                              ),
+                              chartValuesOptions: ChartValuesOptions(showChartValuesInPercentage: true),
+                              
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height*.06),
+                                child: Card(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: ReusableRow(title: "Population", value: snapshot.data!.population.toString()),
+                        ),
+                        ReusableRow(title: "Totle Cases", value: snapshot.data!.cases.toString()),
+                        ReusableRow(title: "Today Cases", value: snapshot.data!.todayCases.toString()),
+                        ReusableRow(title: "Deaths", value: snapshot.data!.deaths.toString()),
+                        ReusableRow(title: "Today Deaths", value: snapshot.data!.todayDeaths.toString()),
+                        ReusableRow(title: "Recoverd", value: snapshot.data!.recovered.toString()),
+                        ReusableRow(title: "Today Recoverd", value: snapshot.data!.todayRecovered.toString()),
+                        ReusableRow(title: "Critical", value: snapshot.data!.critical.toString()),
+                      ],
+                    ),
+                                ),
+                              ),
+                              GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Countrieslist()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        child: Center(child: Text('Track Countries')),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xff1aa260),
+                        ),
+                      ),
+                    ),
+                              )
+                               
+                      ],
+                    ),
+                  );
+                }
+              }),
+              
+            ],
+          ),
         ),
       ),
     );
